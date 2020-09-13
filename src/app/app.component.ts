@@ -9,10 +9,9 @@ import { Component, ChangeDetectionStrategy } from '@angular/core';
 export class AppComponent {
 
   title: string;
-  constructor() {
-  }
 
-  toggle() {
+  constructor() {
     this.title = 'Mohammad';
   }
+
 }
