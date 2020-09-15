@@ -18,4 +18,19 @@ describe('AppServiceService', () => {
     const msg = service.getTestMessage();
     expect(msg).toBe('test-message');
   });
+
+  it('observable should return proper message', (finish) => {
+    service.getObservableMessage().subscribe(x => {
+      expect(x).toBe('observedMessage');
+      finish();
+    })
+  });
+
+  it('obsevable raise error', (finish) => {
+    expect(service.getObservableError().subscribe(x => {
+    }, err => {
+      expect(err.message).toBe('error happened')
+      finish();
+    }));
+  });
 });

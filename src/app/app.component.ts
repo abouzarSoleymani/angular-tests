@@ -1,4 +1,5 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { Observable } from 'rxjs';
 import { AppServiceService } from './app-service.service';
 
 @Component({
@@ -10,10 +11,12 @@ export class AppComponent {
 
   title: string;
   serviceMessage: string;
+  delayedMessage: Observable<string>;
 
   constructor(private service: AppServiceService) {
     this.title = 'Mohammad';
     this.serviceMessage = service.getTestMessage();
+    this.delayedMessage = service.getObservableMessage();
   }
 
   onClick() {

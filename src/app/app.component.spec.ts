@@ -1,19 +1,26 @@
 import { TestBed, async, ComponentFixture } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
+import { AppServiceService } from './app-service.service';
 import { AppComponent } from './app.component';
 
 describe('AppComponent', () => {
   let component: AppComponent;
   let fixture: ComponentFixture<AppComponent>;
+  const mockService = new AppServiceService();
+  mockService.getTestMessage = jasmine.createSpy('testMessage').and.returnValue('Amir');
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [
         AppComponent
       ],
+      providers: [
+        { provide: AppServiceService, useValue: mockService }
+      ]
     }).compileComponents();
     fixture = TestBed.createComponent(AppComponent);
     component = fixture.componentInstance;
+
     fixture.detectChanges();
   }));
 
@@ -50,10 +57,14 @@ describe('AppComponent', () => {
 
   it('correct service message', () => {
     const serviceMessage = fixture.debugElement.query(By.css('#service')).nativeElement as HTMLElement;
-    expect(serviceMessage.textContent).toBe('test-message');
+    expect(serviceMessage.textContent).toBe('Amir');
+    expect(mockService.getTestMessage).toHaveBeenCalled();
   });
 
-  it('use mock service', () => {
-
+  it('component c', () => {
+    mockService.getObservableMessage = jasmine.createSpy('getObservableMessage').and.returnValue('test message');
+    fixture.detectChanges();
+    const delayedMessage = fixture.debugElement.query(By.css('#delayed-message')).nativeElement as HTMLElement;
+    expect(delayedMessage.textContent).toBe('test message');
   });
 });
