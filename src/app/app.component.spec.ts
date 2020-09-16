@@ -95,7 +95,4 @@ describe('AppComponent', () => {
     expect(testService.testMessage).toHaveBeenCalled();
   });
 
-  it('wait for async', waitForAsync(() => {
-
-  }));
 });
