@@ -32,6 +32,15 @@ describe('WithInputComponent', () => {
       done();
     });
     button.dispatchEvent(new Event('click'));
-    fixture.detectChanges();
+  });
+
+  it('click on button with click', (done) => {
+    const button = fixture.debugElement.query(By.css('button')).nativeElement as HTMLButtonElement;
+    component.name = 'Hojjat';
+    component.nameButtonClicked.subscribe(x => {
+      expect(x).toBe('Hojjat');
+      done();
+    });
+    button.click();
   });
 });
