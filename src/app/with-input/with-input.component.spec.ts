@@ -1,15 +1,32 @@
+import { Component } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
 import { WithInputComponent } from './with-input.component';
 
+@Component({
+  template: `
+    <app-with-input [name]="name" (nameButtonClicked)="click($event)" >
+    </app-with-input>
+  `
+})
+class HostComponent {
+  name: string;
+  eventValue: string;
+  click (event: string) {
+    this.eventValue = event;
+  }
+}
+
 describe('WithInputComponent', () => {
   let component: WithInputComponent;
   let fixture: ComponentFixture<WithInputComponent>;
+  let hostFixture: ComponentFixture<HostComponent>;
+  let hostComponent: HostComponent;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ WithInputComponent ]
+      declarations: [ WithInputComponent, HostComponent ]
     })
     .compileComponents();
   }));
@@ -17,6 +34,8 @@ describe('WithInputComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(WithInputComponent);
     component = fixture.componentInstance;
+    hostFixture = TestBed.createComponent(HostComponent);
+    hostComponent = hostFixture.componentInstance;
     fixture.detectChanges();
   });
 
@@ -42,5 +61,14 @@ describe('WithInputComponent', () => {
       done();
     });
     button.click();
+  });
+
+  it('host makes an input to child', () => {
+    const button = hostFixture.debugElement.query(By.css('app-with-input button')).nativeElement as HTMLButtonElement;
+    hostComponent.name = 'Ali';
+    hostFixture.detectChanges();
+    button.click();
+    hostFixture.detectChanges();
+    expect(hostComponent.eventValue).toBe('Ali');
   });
 });
