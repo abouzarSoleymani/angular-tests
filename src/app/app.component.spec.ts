@@ -1,15 +1,31 @@
 import { TestBed, async, ComponentFixture } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
+import { of } from 'rxjs';
+import { delay } from 'rxjs/operators';
 import { AppServiceService } from './app-service.service';
 import { AppComponent } from './app.component';
+
+function buildMockObject() {
+  let mock = new AppServiceService();
+  mock.getTestMessage = jasmine.createSpy('testMessage').and.returnValue('Amir');
+  mock.getObservableMessage = jasmine.createSpy('getObservableMessage').and.returnValue(of('test message').pipe(delay(10)));
+  return mock;
+}
+
+function buildMockObjectWithSpy() {
+  let mock = jasmine.createSpyObj('AppServiceService', ['getTestMessage', 'getObservableMessage']);
+  mock.getTestMessage.and.returnValue('Amir');
+  mock.getObservableMessage.and.returnValue(of('test message').pipe(delay(10)));
+  return mock;
+}
 
 describe('AppComponent', () => {
   let component: AppComponent;
   let fixture: ComponentFixture<AppComponent>;
-  const mockService = new AppServiceService();
-  mockService.getTestMessage = jasmine.createSpy('testMessage').and.returnValue('Amir');
+  let mockService;
 
   beforeEach(async(() => {
+    mockService = buildMockObjectWithSpy();
     TestBed.configureTestingModule({
       declarations: [
         AppComponent
@@ -29,6 +45,7 @@ describe('AppComponent', () => {
   });
 
   it('display', () => {
+
     const element = fixture.nativeElement as HTMLElement;
     expect(element.textContent).toContain('Mohammad');
     expect(element.querySelector('.header').textContent).toContain('ali');
@@ -62,9 +79,15 @@ describe('AppComponent', () => {
   });
 
   it('component c', () => {
-    mockService.getObservableMessage = jasmine.createSpy('getObservableMessage').and.returnValue('test message');
     fixture.detectChanges();
     const delayedMessage = fixture.debugElement.query(By.css('#delayed-message')).nativeElement as HTMLElement;
     expect(delayedMessage.textContent).toBe('test message');
+  });
+
+  it('test', () => {
+    const testService = jasmine.createSpyObj('TestService', ['testMessage']);
+    testService.testMessage.and.returnValue('Hello');
+    expect(testService.testMessage()).toBe('Hello');
+    expect(testService.testMessage).toHaveBeenCalled();
   });
 });
