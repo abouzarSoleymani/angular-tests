@@ -1,9 +1,13 @@
 import { TestBed, async, ComponentFixture } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { of } from 'rxjs';
+import { defer, of } from 'rxjs';
 import { delay } from 'rxjs/operators';
 import { AppServiceService } from './app-service.service';
 import { AppComponent } from './app.component';
+
+export function asyncData<T>(data: T) {
+  return defer(() => Promise.resolve(data));
+}
 
 function buildMockObject() {
   let mock = new AppServiceService();
@@ -90,4 +94,8 @@ describe('AppComponent', () => {
     expect(testService.testMessage()).toBe('Hello');
     expect(testService.testMessage).toHaveBeenCalled();
   });
+
+  it('wait for async', waitForAsync(() => {
+
+  }));
 });
