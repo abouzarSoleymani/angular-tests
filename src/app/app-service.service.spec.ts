@@ -33,4 +33,16 @@ describe('AppServiceService', () => {
       finish();
     }));
   });
+
+  it('mock value field', () => {
+    spyOnProperty(service, 'getValueField', 'get').and.returnValue(12);
+    expect(service.getValueField).toBe(12);
+  });
+
+  it('mock setter', () => {
+    let f: number;
+    spyOnProperty(service, 'setValueField', 'set').and.callFake(val => f = val);
+    service.setValueField = 154;
+    expect(f).toBe(154);
+  });
 });

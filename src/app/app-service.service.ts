@@ -6,6 +6,15 @@ import { map } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class AppServiceService {
+  valueField: number = 10;
+
+  get getValueField(): number {
+    return this.valueField;
+  }
+
+  set setValueField(val: number) {
+    this.valueField = val;
+  }
 
   constructor() { }
 
