@@ -1,5 +1,4 @@
-import { Component, ChangeDetectionStrategy } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Component } from '@angular/core';
 import { AppServiceService } from './app-service.service';
 
 @Component({
