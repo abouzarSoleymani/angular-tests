@@ -6,14 +6,14 @@ import { AppServiceService } from './app-service.service';
 import { AppComponent } from './app.component';
 
 function buildMockObject() {
-  let mock = new AppServiceService();
+  const mock = new AppServiceService();
   mock.getTestMessage = jasmine.createSpy('testMessage').and.returnValue('Amir');
   mock.getObservableMessage = jasmine.createSpy('getObservableMessage').and.returnValue(of('test message').pipe(delay(10)));
   return mock;
 }
 
 function buildMockObjectWithSpy() {
-  let mock = jasmine.createSpyObj('AppServiceService', ['getTestMessage', 'getObservableMessage']);
+  const mock = jasmine.createSpyObj('AppServiceService', ['getTestMessage', 'getObservableMessage']);
   mock.getTestMessage.and.returnValue('Amir');
   mock.getObservableMessage.and.returnValue(of('test message').pipe(delay(10)));
   return mock;
