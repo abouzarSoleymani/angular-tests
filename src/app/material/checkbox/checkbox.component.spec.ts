@@ -1,5 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { BrowserModule, By } from '@angular/platform-browser';
+import { FormsModule } from '@angular/forms';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {MatCheckboxModule} from '@angular/material/checkbox';
 import { CheckboxComponent } from './checkbox.component';
 
 describe('CheckboxComponent', () => {
@@ -8,7 +11,13 @@ describe('CheckboxComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CheckboxComponent ]
+      declarations: [ CheckboxComponent ],
+      imports: [
+        MatCheckboxModule,
+        BrowserAnimationsModule,
+        BrowserModule,
+        FormsModule
+      ]
     })
     .compileComponents();
   }));
@@ -21,5 +30,28 @@ describe('CheckboxComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('click checkbox changes enabled', (done) => {
+    const checkBox = fixture.debugElement.query(By.css('input')).nativeElement as HTMLInputElement;
+    expect(component.enabled).toBeFalse();
+    expect(checkBox.checked).toBeFalsy();
+    checkBox.click();
+    fixture.detectChanges();
+    fixture.whenStable().then(() => {
+      expect(component.enabled).toBeTruthy();
+      expect(checkBox.checked).toBeTruthy();
+      done();
+    });
+  });
+
+  it('changing enabled will alter checkbox state', (done) => {
+    const checkBox = fixture.debugElement.query(By.css('input')).nativeElement as HTMLInputElement;
+    component.enabled = true;
+    fixture.detectChanges();
+    fixture.whenStable().then(() => {
+      expect(checkBox.checked).toBeTrue();
+      done();
+    });
   });
 });

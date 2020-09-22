@@ -2,10 +2,10 @@ import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-checkbox',
-  templateUrl: './checkbox.component.html',
-  styleUrls: ['./checkbox.component.scss']
+  templateUrl: './checkbox.component.html'
 })
 export class CheckboxComponent implements OnInit {
+  enabled = false;
 
   constructor() { }
 
