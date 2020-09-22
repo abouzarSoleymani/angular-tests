@@ -54,4 +54,11 @@ describe('CheckboxComponent', () => {
       done();
     });
   });
+
+  it('clicking on checkbox will raise change event', () => {
+    spyOn(component, 'change');
+    const checkBox = fixture.debugElement.query(By.css('input')).nativeElement as HTMLInputElement;
+    checkBox.click();
+    expect(component.change).toHaveBeenCalled();
+  });
 });
