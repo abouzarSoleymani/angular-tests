@@ -10,6 +10,8 @@ export class WithInputComponent {
   @Input()
   name: string;
 
+  model: boolean;
+
   @Output()
   nameButtonClicked = new EventEmitter<string>();
 
