@@ -2,11 +2,11 @@ import { TestBed, async, ComponentFixture } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { of } from 'rxjs';
 import { delay } from 'rxjs/operators';
-import { AppServiceService } from './app-service.service';
-import { AppComponent } from './app.component';
+import { AppTestServiceService } from './app-test-service.service';
+import { AppTestComponent } from './app-test.component';
 
 function buildMockObject() {
-  const mock = new AppServiceService();
+  const mock = new AppTestServiceService();
   mock.getTestMessage = jasmine.createSpy('testMessage').and.returnValue('Amir');
   mock.getObservableMessage = jasmine.createSpy('getObservableMessage').and.returnValue(of('test message').pipe(delay(10)));
   return mock;
@@ -19,22 +19,22 @@ function buildMockObjectWithSpy() {
   return mock;
 }
 
-describe('AppComponent', () => {
-  let component: AppComponent;
-  let fixture: ComponentFixture<AppComponent>;
+describe('AppTestComponent', () => {
+  let component: AppTestComponent;
+  let fixture: ComponentFixture<AppTestComponent>;
   let mockService;
 
   beforeEach(async(() => {
     mockService = buildMockObjectWithSpy();
     TestBed.configureTestingModule({
       declarations: [
-        AppComponent
+        AppTestComponent
       ],
       providers: [
-        { provide: AppServiceService, useValue: mockService }
+        { provide: AppTestServiceService, useValue: mockService }
       ]
     }).compileComponents();
-    fixture = TestBed.createComponent(AppComponent);
+    fixture = TestBed.createComponent(AppTestComponent);
     component = fixture.componentInstance;
 
     fixture.detectChanges();

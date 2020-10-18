@@ -5,7 +5,7 @@ import { map } from 'rxjs/operators';
 @Injectable({
   providedIn: 'root'
 })
-export class AppServiceService {
+export class AppTestServiceService {
   valueField = 10;
 
   get getValueField(): number {
