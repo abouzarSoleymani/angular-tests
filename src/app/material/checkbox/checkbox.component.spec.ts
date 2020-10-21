@@ -45,11 +45,12 @@ describe('CheckboxComponent', () => {
     });
   });
 
-  xit('changing enabled will alter checkbox state', (done) => {
+  it('changing enabled will alter checkbox state', (done) => {
     const checkBox = fixture.debugElement.query(By.css('input')).nativeElement as HTMLInputElement;
     component.enabled = true;
     fixture.detectChanges();
     fixture.whenStable().then(() => {
+      fixture.detectChanges();
       expect(checkBox.checked).toBeTrue();
       done();
     });
