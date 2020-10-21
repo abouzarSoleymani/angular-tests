@@ -56,4 +56,17 @@ describe('WithInputComponent', () => {
     expect(component.group.get('firstName').value).toBe('Ali');
   });
 
+  it('when focus in first name, error required appears', (done) => {
+    firstName.focus();
+    fixture.detectChanges();
+    lastName.focus();
+    fixture.detectChanges();
+    fixture.whenStable().then(() => {
+      fixture.detectChanges();
+      const error = fixture.debugElement.query(By.css('.error')).nativeElement as HTMLInputElement;
+      expect(error.textContent).toBe('Required!');
+      done();
+    });
+  });
+
 });

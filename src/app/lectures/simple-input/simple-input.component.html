@@ -1,12 +1,12 @@
 <form [formGroup]="group" (ngSubmit)="$event.preventDefault(); submit()" >
     <div>
         <input placeholder="First Name" formControlName="firstName" type="text" >
-        <span *ngIf="firstNameError()" style="color: red">Required!</span>
+        <span *ngIf="firstNameError()" class="error" style="color: red">Required!</span>
     </div>
     <div>
         <input placeholder="Last Name" formControlName="lastName" type="text" >
     </div>
     <div>
-        <input type="submit" value="Post"> 
+        <input type="submit" value="Post">
     </div>
 </form>
