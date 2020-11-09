@@ -53,7 +53,6 @@ describe('WithInputComponent', () => {
   it('when user inputs something in firstName the value changes in model', () => {
     firstName.value = 'Ali';
     firstName.dispatchEvent(new Event('input'));
-    fixture.detectChanges();
     expect(component.group.get('firstName').value).toBe('Ali');
   });
 
@@ -75,7 +74,6 @@ describe('WithInputComponent', () => {
     lastName.value = 'Jamali';
     firstName.dispatchEvent(new Event('input'));
     lastName.dispatchEvent(new Event('input'));
-    fixture.detectChanges();
     submitButton.click();
     expect(mockService.post).toHaveBeenCalledWith({firstName: 'Ali', lastName: 'Jamali'});
   });
