@@ -10,7 +10,7 @@ describe('WithInputComponent', () => {
   let component: SimpleInputComponent;
   let firstName: HTMLInputElement;
   let lastName: HTMLInputElement;
-
+  let submitButton: HTMLInputElement;
   beforeEach(async(() => {
     mockService = jasmine.createSpyObj<SimpleService>('SimpleService', ['get', 'post']);
     return TestBed.configureTestingModule({
@@ -33,6 +33,7 @@ describe('WithInputComponent', () => {
     fixture.detectChanges();
     firstName = fixture.debugElement.query(By.css('[placeholder="First Name"]')).nativeElement as HTMLInputElement;
     lastName = fixture.debugElement.query(By.css('[placeholder="Last Name"]')).nativeElement as HTMLInputElement;
+    submitButton = fixture.debugElement.query(By.css('[type="submit"]')).nativeElement as HTMLInputElement;
   });
 
   it('should create', () => {
@@ -67,6 +68,16 @@ describe('WithInputComponent', () => {
       expect(error.textContent).toBe('Required!');
       done();
     });
+  });
+
+  it('enter valid name and last name and press post button', () => {
+    firstName.value = 'Ali';
+    lastName.value = 'Jamali';
+    firstName.dispatchEvent(new Event('input'));
+    lastName.dispatchEvent(new Event('input'));
+    fixture.detectChanges();
+    submitButton.click();
+    expect(mockService.post).toHaveBeenCalledWith({firstName: 'Ali', lastName: 'Jamali'});
   });
 
 });

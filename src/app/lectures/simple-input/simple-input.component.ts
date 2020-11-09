@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { SimpleService } from './simple-service.service';
+import { SimpleModel } from './simple.model';
 
 @Component({
   selector: 'app-lecture',
